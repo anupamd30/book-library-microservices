@@ -4,15 +4,13 @@ using BorrowService.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // DB
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer("Server=LAPTOP-OEOVFK2L\\SQLEXPRESS;Database=BookServiceDb;Trusted_Connection=True;TrustServerCertificate=True"));
-
-
+  options.UseSqlServer(connectionString));
 // 🔥 HttpClient
 builder.Services.AddHttpClient<BookServiceClient>();
 
