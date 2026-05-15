@@ -1,0 +1,37 @@
+name: Build and deploy BookService
+
+on:
+push:
+paths:
+- 'BookService/**'
+- '.github/workflows/bookservice.yml'
+
+jobs:
+build-and-deploy:
+runs-on: ubuntu-latest
+
+```
+steps:
+- uses: actions/checkout@v4
+
+- name: Setup .NET
+  uses: actions/setup-dotnet@v4
+  with:
+    dotnet-version: '10.0.x'
+
+- name: Restore
+  run: dotnet restore BookService/BookService.csproj
+
+- name: Build
+  run: dotnet build BookService/BookService.csproj --configuration Release
+
+- name: Publish
+  run: dotnet publish BookService/BookService.csproj -c Release -o publish
+
+- name: Deploy to Azure
+  uses: azure/webapps-deploy@v3
+  with:
+    app-name: 'book-service'
+    publish-profile: ${{ secrets.BOOKSERVICE_PUBLISH_PROFILE }}
+    package: publish
+```
