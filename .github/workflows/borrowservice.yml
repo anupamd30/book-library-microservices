@@ -1,0 +1,37 @@
+name: Build and deploy BorrowService
+
+on:
+push:
+paths:
+- 'BorrowService/**'
+- '.github/workflows/borrowservice.yml'
+
+jobs:
+build-and-deploy:
+runs-on: ubuntu-latest
+
+```
+steps:
+- uses: actions/checkout@v4
+
+- name: Setup .NET
+  uses: actions/setup-dotnet@v4
+  with:
+    dotnet-version: '10.0.x'
+
+- name: Restore
+  run: dotnet restore BorrowService/BorrowService.csproj
+
+- name: Build
+  run: dotnet build BorrowService/BorrowService.csproj --configuration Release
+
+- name: Publish
+  run: dotnet publish BorrowService/BorrowService.csproj -c Release -o publish
+
+- name: Deploy to Azure
+  uses: azure/webapps-deploy@v3
+  with:
+    app-name: 'borrow-service'
+    publish-profile: ${{ secrets.BORROWSERVICE_PUBLISH_PROFILE }}
+    package: publish
+```
