@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000" // API Gateway
+  baseURL: "https://api-gateways-api-dzh0dfebgwgkgqgq.centralindia-01.azurewebsites.net" // API Gateway
 });
 
 export default api;
