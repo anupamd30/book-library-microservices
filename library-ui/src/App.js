@@ -9,11 +9,18 @@ function App() {
   const [history, setHistory] = useState([]);
 
   const loadData = async () => {
-    const booksRes = await api.get("/api/books");
-    const historyRes = await api.get("/api/borrow");
+    try {
+      // Load books from API Gateway
+      const booksRes = await api.get("/gateway/books");
 
-    setBooks(booksRes.data);
-    setHistory(historyRes.data);
+      // Load borrow history from API Gateway
+      const historyRes = await api.get("/gateway/borrow");
+
+      setBooks(booksRes.data);
+      setHistory(historyRes.data);
+    } catch (error) {
+      console.error("Error loading data:", error);
+    }
   };
 
   useEffect(() => {
@@ -24,10 +31,13 @@ function App() {
     <div className="container">
       <h1>📚 Library System</h1>
 
+      {/* Book List */}
       <BookList books={books} />
 
+      {/* Borrow Book */}
       <BorrowBook onSuccess={loadData} />
 
+      {/* Borrow History */}
       <BorrowHistory history={history} onSuccess={loadData} />
     </div>
   );
