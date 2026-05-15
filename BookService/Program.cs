@@ -4,7 +4,7 @@ using BookService.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 // Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -19,8 +19,7 @@ builder.Services.AddCors(options =>
 });
 // DB
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer("Server=LAPTOP-OEOVFK2L\\SQLEXPRESS;Database=BookServiceDb;Trusted_Connection=True;TrustServerCertificate=True"));
-
+  options.UseSqlServer(connectionString));
 // DI Registration ✅
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookService, BookService.Services.BookService>();
