@@ -7,16 +7,20 @@ function BorrowBook({ onSuccess }) {
 
   const handleBorrow = async () => {
     try {
-      await api.post("/api/borrow/borrow", { bookId, userName });
+      await api.post("/gateway/borrow/borrow", {
+        bookId,
+        userName
+      });
 
       alert("✅ Book Borrowed!");
 
       setBookId("");
       setUserName("");
 
-      onSuccess(); // 🔥 refresh data
-    } catch {
-      alert("❌ Failed");
+      onSuccess();
+    } catch (error) {
+      console.error(error);
+      alert("❌ Failed to borrow book");
     }
   };
 
@@ -25,20 +29,25 @@ function BorrowBook({ onSuccess }) {
       <h2>📦 Borrow Book</h2>
 
       <input
+        type="text"
         placeholder="Book ID"
         value={bookId}
         onChange={(e) => setBookId(e.target.value)}
       />
 
       <input
+        type="text"
         placeholder="User Name"
         value={userName}
         onChange={(e) => setUserName(e.target.value)}
       />
 
       <br />
+      <br />
 
-      <button onClick={handleBorrow}>Borrow</button>
+      <button onClick={handleBorrow}>
+        Borrow
+      </button>
     </div>
   );
 }
