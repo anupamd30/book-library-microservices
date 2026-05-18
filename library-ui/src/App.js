@@ -10,10 +10,7 @@ function App() {
 
   const loadData = async () => {
     try {
-      // Load books from API Gateway
       const booksRes = await api.get("/gateway/books");
-
-      // Load borrow history from API Gateway
       const historyRes = await api.get("/gateway/borrow");
 
       setBooks(booksRes.data);
@@ -31,13 +28,10 @@ function App() {
     <div className="container">
       <h1>📚 Library System</h1>
 
-      {/* Book List */}
-      <BookList books={books} />
+      <BookList books={books} onSuccess={loadData} />
 
-      {/* Borrow Book */}
       <BorrowBook onSuccess={loadData} />
 
-      {/* Borrow History */}
       <BorrowHistory history={history} onSuccess={loadData} />
     </div>
   );

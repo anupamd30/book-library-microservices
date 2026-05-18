@@ -2,31 +2,29 @@ import React from "react";
 import api from "../api/api";
 
 function BorrowHistory({ history, onSuccess }) {
-  const handleReturn = async (id) => {
-    await api.post(`/api/borrow/return/${id}`);
-    onSuccess(); // 🔥 refresh
+  const returnBook = async (id) => {
+    try {
+      await api.post(`/gateway/borrow/return/${id}`);
+
+      onSuccess();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <div className="card">
       <h2>📊 Borrow History</h2>
 
-      {history.map(item => (
+      {history.map((item) => (
         <div key={item.id}>
-          👤 {item.userName}
-          <br />
-          📘 {item.bookId}
-          <br />
-          📅 {item.borrowDate}
-          <br />
-          🔁 {item.returnDate || "Not Returned"}
-          <br />
+          <p>👤 {item.userName}</p>
+          <p>📘 {item.bookId}</p>
+          <p>📅 {item.borrowDate}</p>
 
-          {!item.returnDate && (
-            <button onClick={() => handleReturn(item.id)}>
-              Return
-            </button>
-          )}
+          <button onClick={() => returnBook(item.id)}>
+            Return Book
+          </button>
 
           <hr />
         </div>
