@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "A3cNqz7yHVE=",
+  "success": true,
+  "projectFilePath": "D:\\AI PROJECTS\\Book Library Manager Project\\temp-openapi-check\\temp-openapi-check.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\CE\\.nuget\\packages\\microsoft.openapi\\2.4.1\\microsoft.openapi.2.4.1.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -303,3 +303,4 @@ D:\AI PROJECTS\Book Library Manager Project\BookService\obj\Debug\net10.0\refint
 D:\AI PROJECTS\Book Library Manager Project\BookService\obj\Debug\net10.0\BookService.pdb
 D:\AI PROJECTS\Book Library Manager Project\BookService\obj\Debug\net10.0\BookService.genruntimeconfig.cache
 D:\AI PROJECTS\Book Library Manager Project\BookService\obj\Debug\net10.0\ref\BookService.dll
+D:\AI PROJECTS\Book Library Manager Project\BookService\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

@@ -1,175 +1,325 @@
 import React, { useState } from "react";
+
 import api from "../api/api";
 
 function BookList({ books, onSuccess }) {
-  const [showForm, setShowForm] = useState(false);
+
+  const [showAddForm, setShowAddForm] =
+    useState(false);
+
+  const [editingBookId, setEditingBookId] =
+    useState(null);
 
   const [newBook, setNewBook] = useState({
     title: "",
     author: "",
     isbn: "",
-    genre: ""
+    genre: "",
+    isAvailable: true
   });
 
+  // 🔥 RESET FORM
+  const resetForm = () => {
+
+    setNewBook({
+      title: "",
+      author: "",
+      isbn: "",
+      genre: "",
+      isAvailable: true
+    });
+
+    setEditingBookId(null);
+
+    setShowAddForm(false);
+  };
+
+  // 🔥 ADD BOOK
   const addBook = async () => {
+
     try {
+
       await api.post("/gateway/books", {
         ...newBook,
-        isAvailable: true,
         createdAt: new Date().toISOString()
       });
 
-      setNewBook({
-        title: "",
-        author: "",
-        isbn: "",
-        genre: ""
-      });
+      alert("✅ Book Added");
 
-      setShowForm(false);
+      resetForm();
 
-      onSuccess();
-    } catch (error) {
-      console.error("Error adding book:", error);
+      if (onSuccess) {
+        onSuccess();
+      }
+
+    } catch (err) {
+
+      console.error(err);
+
+      alert("❌ Failed to add book");
+    }
+  };
+
+  // 🔥 DELETE BOOK
+  const deleteBook = async (id) => {
+
+    try {
+
+      await api.delete(
+        `/gateway/books/${id}`
+      );
+
+      alert("✅ Book Deleted");
+
+      if (onSuccess) {
+        onSuccess();
+      }
+
+    } catch {
+
+      alert("❌ Delete Failed");
+    }
+  };
+
+  // 🔥 EDIT BOOK
+  const editBook = (book) => {
+
+    setShowAddForm(false);
+
+    setEditingBookId(book.id);
+
+    setNewBook({
+      title: book.title,
+      author: book.author,
+      isbn: book.isbn,
+      genre: book.genre,
+      isAvailable: book.isAvailable
+    });
+  };
+
+  // 🔥 UPDATE BOOK
+  const updateBook = async () => {
+
+    try {
+
+      await api.put(
+        `/gateway/books/${editingBookId}`,
+        {
+          ...newBook
+        }
+      );
+
+      alert("✅ Book Updated");
+
+      resetForm();
+
+      if (onSuccess) {
+        onSuccess();
+      }
+
+    } catch (err) {
+
+      console.error(err);
+
+      alert("❌ Update Failed");
     }
   };
 
   return (
     <div className="card">
+
       <h2>📘 Books</h2>
 
+      {/* ADD BUTTON */}
       <button
-        onClick={() => setShowForm(!showForm)}
-        style={{
-          marginBottom: "15px",
-          padding: "10px 15px",
-          borderRadius: "8px",
-          border: "none",
-          backgroundColor: "#4f46e5",
-          color: "white",
-          cursor: "pointer"
+        onClick={() => {
+
+          setEditingBookId(null);
+
+          setShowAddForm(!showAddForm);
         }}
       >
         ➕ Add Book
       </button>
 
-      {showForm && (
-        <div
-          style={{
-            marginBottom: "20px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "10px"
-          }}
-        >
-          <input
-            placeholder="Title"
-            value={newBook.title}
-            onChange={(e) =>
-              setNewBook({ ...newBook, title: e.target.value })
-            }
-            style={inputStyle}
-          />
+      {/* ADD BOOK FORM */}
+      {
+        showAddForm && (
 
-          <input
-            placeholder="Author"
-            value={newBook.author}
-            onChange={(e) =>
-              setNewBook({ ...newBook, author: e.target.value })
-            }
-            style={inputStyle}
-          />
+          <div className="form-box">
 
-          <input
-            placeholder="ISBN"
-            value={newBook.isbn}
-            onChange={(e) =>
-              setNewBook({ ...newBook, isbn: e.target.value })
-            }
-            style={inputStyle}
-          />
+            <input
+              placeholder="Title"
+              value={newBook.title}
+              onChange={(e) =>
+                setNewBook({
+                  ...newBook,
+                  title: e.target.value
+                })
+              }
+            />
 
-          <input
-            placeholder="Genre"
-            value={newBook.genre}
-            onChange={(e) =>
-              setNewBook({ ...newBook, genre: e.target.value })
-            }
-            style={inputStyle}
-          />
+            <input
+              placeholder="Author"
+              value={newBook.author}
+              onChange={(e) =>
+                setNewBook({
+                  ...newBook,
+                  author: e.target.value
+                })
+              }
+            />
 
-          <button
-            onClick={addBook}
-            style={{
-              padding: "10px",
-              borderRadius: "8px",
-              border: "none",
-              backgroundColor: "#16a34a",
-              color: "white",
-              cursor: "pointer"
-            }}
-          >
-            Save Book
-          </button>
-        </div>
-      )}
+            <input
+              placeholder="ISBN"
+              value={newBook.isbn}
+              onChange={(e) =>
+                setNewBook({
+                  ...newBook,
+                  isbn: e.target.value
+                })
+              }
+            />
 
-      <hr />
+            <input
+              placeholder="Genre"
+              value={newBook.genre}
+              onChange={(e) =>
+                setNewBook({
+                  ...newBook,
+                  genre: e.target.value
+                })
+              }
+            />
 
-      {books.length === 0 ? (
-        <p>No books found.</p>
-      ) : (
+            <button onClick={addBook}>
+              Save Book
+            </button>
+
+          </div>
+        )
+      }
+
+      {/* BOOK LIST */}
+      {
         books.map((book) => (
+
           <div
             key={book.id}
-            style={{
-              border: "1px solid #444",
-              padding: "15px",
-              marginBottom: "15px",
-              borderRadius: "10px",
-              backgroundColor: "#1e293b",
-              color: "white"
-            }}
+            className="book-card"
           >
+
+            <h3>
+              📘 {book.title}
+            </h3>
+
             <p>
-              <strong>📘 Title:</strong> {book.title}
+              ✍️ {book.author}
             </p>
 
             <p>
-              <strong>✍ Author:</strong> {book.author}
+              🆔 {book.id}
             </p>
 
             <p>
-              <strong>🆔 Book ID:</strong> {book.id}
+              📚 {book.genre}
             </p>
 
             <p>
-              <strong>📚 Genre:</strong> {book.genre}
+              🔢 {book.isbn}
             </p>
 
             <p>
-              <strong>📖 ISBN:</strong> {book.isbn}
+              {
+                book.isAvailable
+                  ? "✅ Available"
+                  : "❌ Borrowed"
+              }
             </p>
 
-            <p>
-              <strong>Status:</strong>{" "}
-              {book.isAvailable
-                ? "✅ Available"
-                : "❌ Borrowed"}
-            </p>
+            {/* ACTION BUTTONS */}
+            <div className="book-actions">
+
+              <button
+                onClick={() => editBook(book)}
+              >
+                ✏️ Edit
+              </button>
+
+              <button
+                onClick={() =>
+                  deleteBook(book.id)
+                }
+              >
+                🗑 Delete
+              </button>
+
+            </div>
+
+            {/* INLINE EDIT FORM */}
+            {
+              editingBookId === book.id && (
+
+                <div className="form-box">
+
+                  <input
+                    placeholder="Title"
+                    value={newBook.title}
+                    onChange={(e) =>
+                      setNewBook({
+                        ...newBook,
+                        title: e.target.value
+                      })
+                    }
+                  />
+
+                  <input
+                    placeholder="Author"
+                    value={newBook.author}
+                    onChange={(e) =>
+                      setNewBook({
+                        ...newBook,
+                        author: e.target.value
+                      })
+                    }
+                  />
+
+                  <input
+                    placeholder="ISBN"
+                    value={newBook.isbn}
+                    onChange={(e) =>
+                      setNewBook({
+                        ...newBook,
+                        isbn: e.target.value
+                      })
+                    }
+                  />
+
+                  <input
+                    placeholder="Genre"
+                    value={newBook.genre}
+                    onChange={(e) =>
+                      setNewBook({
+                        ...newBook,
+                        genre: e.target.value
+                      })
+                    }
+                  />
+
+                  <button onClick={updateBook}>
+                    Update Book
+                  </button>
+
+                </div>
+              )
+            }
+
           </div>
         ))
-      )}
+      }
+
     </div>
   );
 }
-
-const inputStyle = {
-  padding: "10px",
-  borderRadius: "8px",
-  border: "1px solid #555",
-  backgroundColor: "#0f172a",
-  color: "white"
-};
 
 export default BookList;

@@ -1,19 +1,127 @@
 {
   "Routes": [
+
     {
       "DownstreamPathTemplate": "/api/Books",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "book-service-dhbygrauedfkg3hv.centralindia-01.azurewebsites.net",
-          "Port": 443
+          "Host": "localhost",
+          "Port": 5271
         }
       ],
-      "UpstreamPathTemplate": "/api/books",
+      "UpstreamPathTemplate": "/gateway/books",
       "UpstreamHttpMethod": [ "GET" ]
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/Books",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5271
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/books",
+      "UpstreamHttpMethod": [ "POST" ],
+
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/Books/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5271
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/books/{id}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/Books/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5271
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/books/{id}",
+      "UpstreamHttpMethod": [
+        "DELETE",
+        "PUT"
+      ],
+
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/Borrow",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/borrow",
+      "UpstreamHttpMethod": [ "GET" ],
+
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/Borrow/borrow",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/borrow/borrow",
+      "UpstreamHttpMethod": [ "POST" ],
+
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/Borrow/return/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/borrow/return/{id}",
+      "UpstreamHttpMethod": [ "POST" ],
+
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
     }
   ],
+
   "GlobalConfiguration": {
-    "BaseUrl": "api-gateways-api-dzh0dfebgwgkgqgq.centralindia-01.azurewebsites.net"
+    "BaseUrl": "http://localhost:5000"
   }
 }

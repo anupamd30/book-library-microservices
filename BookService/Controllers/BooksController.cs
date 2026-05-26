@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BookService.Services;
 using BookService.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookService.Controllers
 {
@@ -23,6 +24,7 @@ namespace BookService.Controllers
         }
 
         // CREATE book
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Post(Book book)
         {
@@ -30,6 +32,7 @@ namespace BookService.Controllers
         }
 
         // DELETE book (FIXED → Guid)
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
@@ -66,5 +69,27 @@ namespace BookService.Controllers
 
             return Ok();
         }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id,Book book)
+       {   
+            var books = await _service.GetBooks();
+
+            var existing =
+                books.FirstOrDefault(x => x.Id == id);
+
+            if (existing == null)
+                return NotFound();
+
+            existing.Title = book.Title;
+            existing.Author = book.Author;
+            existing.ISBN = book.ISBN;
+            existing.Genre = book.Genre;
+            existing.IsAvailable = book.IsAvailable;
+
+            await _service.UpdateBook(existing);
+
+            return Ok(existing);
+        }
     }
+            
 }

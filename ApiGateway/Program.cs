@@ -1,40 +1,72 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// load config
-builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+// Ocelot config
+builder.Configuration
+    .AddJsonFile(
+        "ocelot.json",
+        optional: false,
+        reloadOnChange: true
+    );
 
-// ✅ Add Swagger
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
+// 🔥 CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll",
-        policy => policy
-            .AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader());
+    options.AddPolicy("AllowReact",
+        policy =>
+        {
+            policy
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
 });
 
+// JWT Authentication
+builder.Services.AddAuthentication(
+    JwtBearerDefaults.AuthenticationScheme
+)
+.AddJwtBearer("Bearer", options =>
+{
+    options.TokenValidationParameters =
+        new TokenValidationParameters
+        {
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            IssuerSigningKey =
+                new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(
+                        builder.Configuration["Jwt:Key"]!
+                    )
+                )
+        };
+});
+
+// Authorization
+builder.Services.AddAuthorization();
+
 // Ocelot
-builder.Services.AddOcelot();
+builder.Services.AddOcelot(builder.Configuration);
 
 var app = builder.Build();
 
+// 🔥 Use CORS
+app.UseCors("AllowReact");
 
-app.UseCors("AllowAll");
-// ✅ Enable Swagger
-app.UseSwagger();
-app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("http://localhost:5271/swagger/v1/swagger.json", "Book Service");
-    c.SwaggerEndpoint("http://localhost:5002/swagger/v1/swagger.json", "Borrow Service");
-});
+// Authentication
+app.UseAuthentication();
 
-// Ocelot middleware
+app.UseAuthorization();
+
+// Ocelot
 await app.UseOcelot();
 
 app.Run();

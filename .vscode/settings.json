@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/643dcd32-3d4b-4743-80fe-001f3a988268/resourceGroups/book_library_manager_rg/providers/Microsoft.Web/sites/borrow-service-v2",
+    "appService.deploySubpath": "BorrowService"
+}
