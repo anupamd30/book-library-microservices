@@ -3,11 +3,11 @@
 
     {
       "DownstreamPathTemplate": "/api/Books",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5271
+          "Host": "book-service-dhbygrauedfkg3hv.centralindia-01.azurewebsites.net",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/gateway/books",
@@ -16,11 +16,11 @@
 
     {
       "DownstreamPathTemplate": "/api/Books",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5271
+          "Host": "book-service-dhbygrauedfkg3hv.centralindia-01.azurewebsites.net",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/gateway/books",
@@ -34,11 +34,11 @@
 
     {
       "DownstreamPathTemplate": "/api/Books/{id}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5271
+          "Host": "book-service-dhbygrauedfkg3hv.centralindia-01.azurewebsites.net",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/gateway/books/{id}",
@@ -47,18 +47,15 @@
 
     {
       "DownstreamPathTemplate": "/api/Books/{id}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5271
+          "Host": "book-service-dhbygrauedfkg3hv.centralindia-01.azurewebsites.net",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/gateway/books/{id}",
-      "UpstreamHttpMethod": [
-        "DELETE",
-        "PUT"
-      ],
+      "UpstreamHttpMethod": [ "DELETE", "PUT" ],
 
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
@@ -68,11 +65,11 @@
 
     {
       "DownstreamPathTemplate": "/api/Borrow",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "borrow-service-v2-ejfyd5aabgahe8fw.centralindia-01.azurewebsites.net",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/gateway/borrow",
@@ -86,11 +83,11 @@
 
     {
       "DownstreamPathTemplate": "/api/Borrow/borrow",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "borrow-service-v2-ejfyd5aabgahe8fw.centralindia-01.azurewebsites.net",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/gateway/borrow/borrow",
@@ -104,11 +101,11 @@
 
     {
       "DownstreamPathTemplate": "/api/Borrow/return/{id}",
-      "DownstreamScheme": "http",
+      "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "borrow-service-v2-ejfyd5aabgahe8fw.centralindia-01.azurewebsites.net",
+          "Port": 443
         }
       ],
       "UpstreamPathTemplate": "/gateway/borrow/return/{id}",
@@ -122,6 +119,6 @@
   ],
 
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5000"
+    "BaseUrl": "api-gateways-api-dzh0dfebgwgkgqgq.centralindia-01.azurewebsites.net"
   }
 }

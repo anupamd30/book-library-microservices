@@ -14,7 +14,7 @@ function Register({ onSwitch }) {
     try {
 
       await axios.post(
-        "http://localhost:5291/api/auth/register",
+        "https://auth-services-ara7drdkc2cjdcag.centralindia-01.azurewebsites.net/api/auth/register",
         {
           userName,
           password

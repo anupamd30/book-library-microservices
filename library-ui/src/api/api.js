@@ -2,13 +2,15 @@ import axios from "axios";
 
 const api = axios.create({
 
-  baseURL: "http://localhost:5000"
+  baseURL:
+    "https://api-gateways-api-dzh0dfebgwgkgqgq.centralindia-01.azurewebsites.net"
 });
 
-// 🔥 Auto attach JWT token
+// JWT token auto attach
 api.interceptors.request.use((config) => {
 
-  const token = localStorage.getItem("token");
+  const token =
+    localStorage.getItem("token");
 
   if (token) {
 
