@@ -1,7 +1,4 @@
-# Docs for the Azure Web Apps Deploy action:
-# https://github.com/Azure/webapps-deploy
-
-name: Build and deploy ASP.Net Core app to Azure Web App - auth-services
+name: Build and deploy ASP.Net Core app to Azure Web App - auth-service-v2
 
 on:
   push:
@@ -10,9 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-
-  build:
-
+  build-and-deploy:
     runs-on: windows-latest
 
     permissions:
@@ -20,47 +15,26 @@ jobs:
 
     steps:
 
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Setup .NET
+      - name: Setup .NET 9
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '9.0.x'
 
-      # BUILD ONLY AUTHSERVICE
-      - name: Restore
+      - name: Restore dependencies
         run: dotnet restore ./AuthService/AuthService.csproj
 
-      - name: Build
+      - name: Build project
         run: dotnet build ./AuthService/AuthService.csproj --configuration Release --no-restore
 
-      - name: Publish
-        run: dotnet publish ./AuthService/AuthService.csproj -c Release -o "${{env.DOTNET_ROOT}}/myapp"
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
-
-  deploy:
-
-    runs-on: windows-latest
-
-    needs: build
-
-    steps:
-
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: .net-app
+      - name: Publish project
+        run: dotnet publish ./AuthService/AuthService.csproj -c Release -o publish
 
       - name: Deploy to Azure Web App
-        id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'auth-services'
-          slot-name: 'Production'
-          package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_261DBA70B3CD4162A9C30A5F73D45F9A }}
+          app-name: 'auth-service-v2'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+          package: publish
