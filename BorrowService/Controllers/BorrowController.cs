@@ -25,7 +25,16 @@ namespace BorrowService.Controllers
         [HttpPost("borrow")]
         public async Task<IActionResult> Borrow(BorrowRecord record)
         {
-            return Ok(await _service.BorrowBook(record));
+            try
+            {
+                var result = await _service.BorrowBook(record);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
         }
 
         [Authorize]
