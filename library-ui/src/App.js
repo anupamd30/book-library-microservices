@@ -33,14 +33,14 @@ function App() {
     try {
 
       // books
-      const booksRes = await api.get("/gateway/books");
+      const booksRes = await api.get("/books");
 
       setBooks(booksRes.data);
 
       // borrow history
       if (isLoggedIn) {
 
-        const historyRes = await api.get("/gateway/borrow");
+        const historyRes = await api.get("/borrow");
 
         setHistory(historyRes.data);
       }
