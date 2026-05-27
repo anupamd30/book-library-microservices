@@ -8,13 +8,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Ocelot config
 builder.Configuration
+    .SetBasePath(builder.Environment.ContentRootPath)
     .AddJsonFile(
         "ocelot.json",
         optional: false,
         reloadOnChange: true
-    );
+    )
+    .AddEnvironmentVariables();
 
-// 🔥 CORS
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReact",
@@ -58,7 +60,7 @@ builder.Services.AddOcelot(builder.Configuration);
 
 var app = builder.Build();
 
-// 🔥 Use CORS
+// CORS
 app.UseCors("AllowReact");
 
 // Authentication

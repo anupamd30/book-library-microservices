@@ -1,8 +1,20 @@
 {
   "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/Auth/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "auth-service-v2-aqc9gxc9dgd6cndq.centralindia-01.azurewebsites.net",
+          "Port": 443
+        }
+      ],
+      "UpstreamPathTemplate": "/auth/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
+    },
 
     {
-      "DownstreamPathTemplate": "/api/Books",
+      "DownstreamPathTemplate": "/api/Books/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -10,61 +22,12 @@
           "Port": 443
         }
       ],
-      "UpstreamPathTemplate": "/gateway/books",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamPathTemplate": "/books/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
 
     {
-      "DownstreamPathTemplate": "/api/Books",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "book-service-dhbygrauedfkg3hv.centralindia-01.azurewebsites.net",
-          "Port": 443
-        }
-      ],
-      "UpstreamPathTemplate": "/gateway/books",
-      "UpstreamHttpMethod": [ "POST" ],
-
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      }
-    },
-
-    {
-      "DownstreamPathTemplate": "/api/Books/{id}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "book-service-dhbygrauedfkg3hv.centralindia-01.azurewebsites.net",
-          "Port": 443
-        }
-      ],
-      "UpstreamPathTemplate": "/gateway/books/{id}",
-      "UpstreamHttpMethod": [ "GET" ]
-    },
-
-    {
-      "DownstreamPathTemplate": "/api/Books/{id}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "book-service-dhbygrauedfkg3hv.centralindia-01.azurewebsites.net",
-          "Port": 443
-        }
-      ],
-      "UpstreamPathTemplate": "/gateway/books/{id}",
-      "UpstreamHttpMethod": [ "DELETE", "PUT" ],
-
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      }
-    },
-
-    {
-      "DownstreamPathTemplate": "/api/Borrow",
+      "DownstreamPathTemplate": "/api/Borrow/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -72,53 +35,11 @@
           "Port": 443
         }
       ],
-      "UpstreamPathTemplate": "/gateway/borrow",
-      "UpstreamHttpMethod": [ "GET" ],
-
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      }
-    },
-
-    {
-      "DownstreamPathTemplate": "/api/Borrow/borrow",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "borrow-service-v2-ejfyd5aabgahe8fw.centralindia-01.azurewebsites.net",
-          "Port": 443
-        }
-      ],
-      "UpstreamPathTemplate": "/gateway/borrow/borrow",
-      "UpstreamHttpMethod": [ "POST" ],
-
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      }
-    },
-
-    {
-      "DownstreamPathTemplate": "/api/Borrow/return/{id}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "borrow-service-v2-ejfyd5aabgahe8fw.centralindia-01.azurewebsites.net",
-          "Port": 443
-        }
-      ],
-      "UpstreamPathTemplate": "/gateway/borrow/return/{id}",
-      "UpstreamHttpMethod": [ "POST" ],
-
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      }
+      "UpstreamPathTemplate": "/borrow/{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     }
   ],
-
   "GlobalConfiguration": {
-    "BaseUrl": "api-gateways-api-dzh0dfebgwgkgqgq.centralindia-01.azurewebsites.net"
+    "BaseUrl": "https://api-gateways-api-dzh0dfebgwgkgqgq.centralindia-01.azurewebsites.net"
   }
 }
