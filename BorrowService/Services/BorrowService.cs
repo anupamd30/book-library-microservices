@@ -29,7 +29,7 @@ namespace BorrowService.Services
             var result = await _repo.Add(record);
 
             // 🔥 IMPORTANT: Update BookService
-            await _bookClient.UpdateAvailability(record.BookId, false);
+         //   await _bookClient.UpdateAvailability(record.BookId, false);
 
             return result;
         }
@@ -51,7 +51,7 @@ namespace BorrowService.Services
                 await _repo.Update(record);
 
                 // 🔥 IMPORTANT: Mark book available again
-                await _bookClient.UpdateAvailability(record.BookId, true);
+              //  await _bookClient.UpdateAvailability(record.BookId, true);
             }
         }
     }
