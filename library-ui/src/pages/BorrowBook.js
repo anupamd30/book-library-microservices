@@ -10,7 +10,7 @@ function BorrowBook({ onSuccess }) {
 
     try {
 
-      await api.post("/gateway/borrow/borrow", {
+      await api.post("/borrow/borrow", {
         bookId,
         userName
       });
