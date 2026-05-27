@@ -165,3 +165,4 @@ D:\AI PROJECTS\Book Library Manager Project\AuthService\obj\Debug\net9.0\refint\
 D:\AI PROJECTS\Book Library Manager Project\AuthService\obj\Debug\net9.0\AuthService.pdb
 D:\AI PROJECTS\Book Library Manager Project\AuthService\obj\Debug\net9.0\AuthService.genruntimeconfig.cache
 D:\AI PROJECTS\Book Library Manager Project\AuthService\obj\Debug\net9.0\ref\AuthService.dll
+D:\AI PROJECTS\Book Library Manager Project\AuthService\bin\Debug\net9.0\Microsoft.AspNetCore.OpenApi.dll

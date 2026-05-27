@@ -29,9 +29,16 @@ namespace AuthService.Controllers
 
             _context.Users.Add(user);
 
-            await _context.SaveChangesAsync();
-
-            return Ok("User registered");
+           try
+            {
+                await _context.SaveChangesAsync();
+                return Ok("User registered");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.ToString());
+            }
+            
         }
 
         [HttpPost("login")]
