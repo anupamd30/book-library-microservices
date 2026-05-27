@@ -1,15 +1,25 @@
 using BorrowService.Data;
-using BorrowService.Repositories;
 using BorrowService.Services;
+
 using Microsoft.EntityFrameworkCore;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+
+using Microsoft.OpenApi.Models;
+
 using System.Text;
-using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// Controllers
+builder.Services.AddControllers();
+
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -22,20 +32,23 @@ builder.Services.AddSwaggerGen(options =>
         Description = "Enter JWT Token"
     });
 
-    var securityRequirement = new OpenApiSecurityRequirement();
-    var schemeRef = new OpenApiSecuritySchemeReference("Bearer", null, null);
-    securityRequirement.Add(schemeRef, new System.Collections.Generic.List<string>());
-    options.AddSecurityRequirement(_ => securityRequirement);
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
 });
-// DB
-builder.Services.AddDbContext<AppDbContext>(options =>
-  options.UseSqlServer(connectionString));
-// 🔥 HttpClient
-builder.Services.AddHttpClient<BookServiceClient>();
 
-// DI
-builder.Services.AddScoped<IBorrowRepository, BorrowRepository>();
-builder.Services.AddScoped<IBorrowService, BorrowService.Services.BorrowService>();
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
@@ -45,7 +58,14 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader());
 });
 
-builder.Services.AddControllers();
+// Database
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(connectionString));
+
+// Dependency Injection
+builder.Services.AddScoped<IBorrowService, BorrowService.Services.BorrowService>();
+
+builder.Services.AddHttpClient<BookServiceClient>();
 
 // JWT Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -65,13 +85,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
+// Middleware
 app.UseCors("AllowAll");
+
 app.UseSwagger();
+
 app.UseSwaggerUI();
+
 app.UseAuthentication();
+
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();
