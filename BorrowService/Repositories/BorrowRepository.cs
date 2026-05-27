@@ -37,13 +37,11 @@ namespace BorrowService.Repositories
 
         public async Task Update(BorrowRecord record)
         {
-            try
+        try
         {
             _context.BorrowRecords.Update(record);
 
             await _context.SaveChangesAsync();
-
-            return record;
         }
         catch (Exception ex)
         {
