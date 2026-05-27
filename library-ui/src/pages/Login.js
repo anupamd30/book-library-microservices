@@ -14,7 +14,7 @@ function Login({ onLogin, onSwitch }) {
     try {
 
       const res = await axios.post(
-        "http://localhost:5291/api/auth/login",
+        "https://api-gateways-api-dzh0dfebgwgkgqgq.centralindia-01.azurewebsites.net/auth/login",
         {
           userName,
           password
