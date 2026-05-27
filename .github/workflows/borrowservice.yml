@@ -31,5 +31,5 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'borrow-service'
-          publish-profile: ${{ secrets.BORROWSERVICE_PUBLISH_PROFILE }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BORROW_SERVICE }}
           package: publish

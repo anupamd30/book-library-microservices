@@ -31,5 +31,5 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'auth-service-v2'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1EA73C69D5274DEA89FBF3DFBCE9ADFF }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_AUTH_SERVICE }}
           package: publish

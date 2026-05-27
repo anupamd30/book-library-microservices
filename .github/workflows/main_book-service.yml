@@ -31,5 +31,5 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'book-service'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BOOK_SERVICE }}
           package: publish
