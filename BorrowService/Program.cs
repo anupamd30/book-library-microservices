@@ -1,4 +1,5 @@
 using BorrowService.Data;
+using BorrowService.Repositories;
 using BorrowService.Services;
 
 using Microsoft.EntityFrameworkCore;
@@ -63,6 +64,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 // Dependency Injection
+builder.Services.AddScoped<IBorrowRepository, BorrowRepository>();
+
 builder.Services.AddScoped<IBorrowService, BorrowService.Services.BorrowService>();
 
 builder.Services.AddHttpClient<BookServiceClient>();
