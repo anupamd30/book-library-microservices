@@ -20,15 +20,35 @@ namespace BorrowService.Repositories
 
         public async Task<BorrowRecord> Add(BorrowRecord record)
         {
+           
+        try
+        {
             _context.BorrowRecords.Add(record);
+
             await _context.SaveChangesAsync();
+
             return record;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.ToString());
+        }
         }
 
         public async Task Update(BorrowRecord record)
         {
+            try
+        {
             _context.BorrowRecords.Update(record);
+
             await _context.SaveChangesAsync();
+
+            return record;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception(ex.ToString());
+        }
         }
     }
 }
