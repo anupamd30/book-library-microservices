@@ -39,7 +39,7 @@ function BookList({ books, onSuccess }) {
 
     try {
 
-      await api.post("/gateway/books", {
+      await api.post("/books", {
         ...newBook,
         createdAt: new Date().toISOString()
       });
@@ -66,7 +66,7 @@ function BookList({ books, onSuccess }) {
     try {
 
       await api.delete(
-        `/gateway/books/${id}`
+        `/books/${id}`
       );
 
       alert("✅ Book Deleted");
@@ -103,7 +103,7 @@ function BookList({ books, onSuccess }) {
     try {
 
       await api.put(
-        `/gateway/books/${editingBookId}`,
+        `/books/${editingBookId}`,
         {
           ...newBook
         }
