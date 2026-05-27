@@ -7,7 +7,7 @@ function BorrowHistory({ history, onSuccess }) {
 
     try {
 
-      await api.post(`/gateway/borrow/return/${id}`);
+      await api.post(`/borrow/return/${id}`);
 
       alert("✅ Book Returned");
 
