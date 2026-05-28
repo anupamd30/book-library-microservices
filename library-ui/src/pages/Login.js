@@ -74,6 +74,16 @@ function Login({ onLogin, onSwitch }) {
       >
         Create new account
       </p>
+       <p
+        style={{
+          cursor: "pointer",
+          color: "cyan",
+          marginTop: "15px"
+        }}
+        onClick={onSwitch}
+      >
+        Forgot password
+      </p>
 
     </div>
   );
