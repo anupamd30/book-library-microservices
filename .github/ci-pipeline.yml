@@ -1,0 +1,51 @@
+name: CI Pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+
+  push:
+    branches:
+      - develop
+
+jobs:
+  build-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 9
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore AuthService
+        run: dotnet restore AuthService/AuthService.csproj
+
+      - name: Restore BookService
+        run: dotnet restore BookService/BookService.csproj
+
+      - name: Restore BorrowService
+        run: dotnet restore BorrowService/BorrowService.csproj
+
+      - name: Restore ApiGateway
+        run: dotnet restore ApiGateway/ApiGateway.csproj
+
+      - name: Build AuthService
+        run: dotnet build AuthService/AuthService.csproj --configuration Release --no-restore
+
+      - name: Build BookService
+        run: dotnet build BookService/BookService.csproj --configuration Release --no-restore
+
+      - name: Build BorrowService
+        run: dotnet build BorrowService/BorrowService.csproj --configuration Release --no-restore
+
+      - name: Build ApiGateway
+        run: dotnet build ApiGateway/ApiGateway.csproj --configuration Release --no-restore
+
+      - name: Run Tests
+        run: dotnet test --configuration Release --no-build

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("temp-openapi-check")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+301bdf6c12ade71bfc09aa3a5428ab8984ca2f60")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+46395ea6b793c802467848709c4a9151ccb615a8")]
 [assembly: System.Reflection.AssemblyProductAttribute("temp-openapi-check")]
 [assembly: System.Reflection.AssemblyTitleAttribute("temp-openapi-check")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
