@@ -52,3 +52,7 @@ jobs:
 
       - name: Build ApiGateway
         run: dotnet build ApiGateway/ApiGateway.csproj --configuration Release --no-restore
+ 
+      # TESTS
+      - name: Run BookService Tests
+        run: dotnet test BookService.Tests/BookService.Tests.csproj
