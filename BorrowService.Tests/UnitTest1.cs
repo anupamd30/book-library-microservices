@@ -1,10 +1,12 @@
-﻿namespace BorrowService.Tests;
+﻿using Xunit;
 
-public class UnitTest1
+namespace BorrowService.Tests;
+
+public class BorrowTests
 {
     [Fact]
-    public void Test1()
+    public void Test_Project_Works()
     {
-
+        Assert.True(true);
     }
 }

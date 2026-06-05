@@ -1,10 +1,12 @@
-﻿namespace AuthService.Tests;
+﻿using Xunit;
 
-public class UnitTest1
+namespace AuthService.Tests;
+
+public class AuthTests
 {
     [Fact]
-    public void Test1()
+    public void Test_Project_Works()
     {
-
+        Assert.True(true);
     }
 }
